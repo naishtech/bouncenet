@@ -1,2 +1,2 @@
-# bouncenet
-Matchmaking Service for Multiplayer Games
+# BounceNet
+Open Source Matchmaking Service for Multiplayer Games
