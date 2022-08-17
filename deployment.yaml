@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: bouncenet
+  name: bouncenet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bouncenet
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: bouncenet
+    spec:
+      containers:
+      - image: naishtech/bouncenet
+        name: bouncenet
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: bouncenet
+  name: bouncenet
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: bouncenet
+  type: ClusterIP
+status:
+  loadBalancer: {}
