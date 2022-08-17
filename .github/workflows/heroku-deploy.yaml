@@ -4,7 +4,7 @@ jobs:
   gradle:
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -12,7 +12,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 11
-
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       - name: Change wrapper permissions
