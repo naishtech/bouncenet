@@ -24,7 +24,7 @@ jobs:
         run: ./gradlew test
   push_to_Docker_Hub:
     # The type of runner that the job will run on
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     # build docker image and push to docker hub
     # only if the app build and test successfully
     needs: [ gradle ]
