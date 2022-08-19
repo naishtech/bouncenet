@@ -19,7 +19,7 @@ public class ListGamesController {
 
         hostedPlayer.setPlayerId("Test Player Id");
         playersList.add(hostedPlayer);
-        hostedGame.setName("Test Game Name");
+        hostedGame.setName("Test Hosted Game Name");
         hostedGame.setAppId("Test App Id");
         hostedGame.setPlayers(playersList);
         hostedGameList.add(hostedGame);
