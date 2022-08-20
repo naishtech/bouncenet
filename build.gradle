@@ -21,6 +21,11 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+docker {
+	name 'naishtech/bouncenet:latest'
+	tasks.dockerPush.dependsOn { tasks.dockerTag }
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
