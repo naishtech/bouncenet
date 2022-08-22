@@ -1,4 +1,4 @@
-package com.conyne.bouncenet.hosting;
+package com.covyne.bouncenet.hosting;
 
 public class HostedPlayer {
 

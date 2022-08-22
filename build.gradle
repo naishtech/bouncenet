@@ -1,14 +1,13 @@
 plugins {
 	id 'org.springframework.boot' version '2.7.2'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
-	id 'com.palantir.docker' version '0.31.0'
 	id 'java'
 }
 
-group = 'com.conyne'
+group = 'com.covyne'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
+sourceCompatibility = 11
+targetCompatibility = 11
 repositories {
 	mavenCentral()
 }
@@ -16,16 +15,18 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.3'
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
 	implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-docker {
-	name 'naishtech/bouncenet:latest'
-	tasks.dockerPush.dependsOn { tasks.dockerTag }
+	implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.3'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+bootRun {
+	systemProperties = System.properties
 }
