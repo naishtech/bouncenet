@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.2'
-	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.7.2'
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'java'
 }
 
 group = 'com.covyne'
@@ -9,29 +9,29 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 11
 targetCompatibility = 11
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.3'
-	implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
-	implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
-	implementation 'org.mapstruct:mapstruct:1.5.2.Final'
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.7.3'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.3'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.7.3'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+    implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.7.3'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.3'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 //required for --jvm-debug flag
 bootRun {
-	systemProperties = System.properties
+    systemProperties = System.properties
 }
 
 springBoot {
-	buildInfo()
+    buildInfo()
 }
