@@ -3,6 +3,7 @@ package com.covyne.bouncenet.admin;
 import com.covyne.bouncenet.datastore.IDataStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,23 +17,25 @@ public class RegisteredUsersController {
 
     private static final String regexEmail = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
-    @GetMapping("/users/{email}")
-    public GetUserResponse getUser(@PathVariable String email, HttpServletResponse response){
+    @GetMapping("/admin/users/{email}")
+    @PreAuthorize("#oauth2.hasScope('admin:read')")
+    public GetUserResponse getUser(@PathVariable String email, HttpServletResponse response) {
 
         final GetUserResponse getUserResponse = new GetUserResponse();
         final Optional<RegisteredUser> registeredUser = dataStore.GetUser(email);
         registeredUser.ifPresent(user -> getUserResponse.setEmail(user.getEmail()));
         registeredUser.ifPresent(user -> getUserResponse.setMessage("Success"));
 
-        if(registeredUser.isEmpty()){
+        if (registeredUser.isEmpty()) {
             response.setStatus(HttpStatus.NOT_FOUND.value());
         }
-        return  getUserResponse;
+        return getUserResponse;
 
     }
 
-    @DeleteMapping("/users/{email}")
-    public void deleteUser(@PathVariable String email, HttpServletResponse response){
+    @PreAuthorize("#oauth2.hasScope('admin:write')")
+    @DeleteMapping("/admin/users/{email}")
+    public void deleteUser(@PathVariable String email, HttpServletResponse response) {
 
         final Optional<RegisteredUser> registeredUser = dataStore.GetUser(email);
         registeredUser.ifPresent(dataStore::deleteUser);
@@ -41,12 +44,13 @@ public class RegisteredUsersController {
 
     }
 
-    @PostMapping("/users/create")
-    public CreateUserResponse createUser(@RequestBody CreateUserRequest createUserRequest, HttpServletResponse response){
+    @PreAuthorize("#oauth2.hasScope('admin:write')")
+    @PostMapping("/admin/users/create")
+    public CreateUserResponse createUser(@RequestBody CreateUserRequest createUserRequest, HttpServletResponse response) {
 
         final CreateUserResponse createUserResponse = new CreateUserResponse();
 
-        if(!createUserRequest.getEmail().matches(regexEmail)){
+        if (!createUserRequest.getEmail().matches(regexEmail)) {
             createUserResponse.setMessage(String.format("Invalid email address %s.", createUserRequest.getEmail()));
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             return createUserResponse;
@@ -54,8 +58,8 @@ public class RegisteredUsersController {
 
         final Optional<RegisteredUser> registeredUser = dataStore.GetUser(createUserRequest.getEmail());
 
-        if(registeredUser.isPresent()){
-            createUserResponse.setMessage(String.format("User %s exists.",createUserRequest.getEmail()));
+        if (registeredUser.isPresent()) {
+            createUserResponse.setMessage(String.format("User %s exists.", createUserRequest.getEmail()));
             response.setStatus(HttpStatus.CONFLICT.value());
             return createUserResponse;
         }
@@ -63,13 +67,10 @@ public class RegisteredUsersController {
         final RegisteredUser newUser = new RegisteredUser();
         newUser.setEmail(createUserRequest.getEmail());
         dataStore.createUser(newUser);
-        createUserResponse.setMessage(String.format("User %s created.",createUserRequest.getEmail()));
+        createUserResponse.setMessage(String.format("User %s created.", createUserRequest.getEmail()));
         return createUserResponse;
 
     }
-
-
-
 
 
 }

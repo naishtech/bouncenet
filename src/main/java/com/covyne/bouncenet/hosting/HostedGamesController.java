@@ -8,7 +8,7 @@ import java.util.List;
 @RestController
 public class HostedGamesController {
 
-    @GetMapping("/list-games")
+    @GetMapping("/api/list-games")
     public ListGamesResponse listGames(){
 
         final ListGamesResponse listGamesResponse = new ListGamesResponse();
