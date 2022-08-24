@@ -22,7 +22,7 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Build with Gradle
-        run: ./gradlew build --debug
+        run: ./gradlew build
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
