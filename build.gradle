@@ -27,10 +27,16 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-//required for --jvm-debug flag
-bootRun {
-    systemProperties = System.properties
+
+//we only want bootable jars
+tasks.jar {
+    enabled = false
 }
+
+//required for --jvm-debug flag
+//bootRun {
+//    systemProperties = System.properties
+//}
 
 springBoot {
     buildInfo()
